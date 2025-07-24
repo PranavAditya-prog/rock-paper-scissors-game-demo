@@ -1,83 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rock Paper Scissors - Python Game Demo</title>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors - Python Demo</title>
+  <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+  <script defer src="https://pyscript.net/latest/pyscript.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-      background-color: #f2f2f2;
-      color: #333;
+      text-align: center;
+      background-color: #f5f5f5;
+      padding: 40px;
     }
-    pre {
-      background: #222;
-      color: #0f0;
-      padding: 15px;
+    button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin: 10px;
+      border: none;
       border-radius: 8px;
-      overflow-x: auto;
-    }
-    a.button {
-      display: inline-block;
-      padding: 10px 15px;
-      margin: 10px 0;
       background-color: #007acc;
       color: white;
-      text-decoration: none;
-      border-radius: 5px;
+      cursor: pointer;
+    }
+    pre {
+      background: #000;
+      color: #0f0;
+      padding: 20px;
+      border-radius: 8px;
+      font-family: monospace;
+      max-width: 600px;
+      margin: 20px auto;
     }
   </style>
 </head>
 <body>
-  <h1>🎮 Rock, Paper, Scissors – Python Console Game</h1>
 
-  <p>This is a fun console-based game built using Python. The user picks Rock, Paper, or Scissors by entering 0, 1, or 2 — and the computer responds with its own random choice.</p>
+  <h1>🎮 Rock, Paper, Scissors – Play in Browser</h1>
+  <p>Click a button to make your move!</p>
 
-  <h2>📜 How It Works</h2>
-  <pre>
-You choose: 0 for Rock, 1 for Paper, 2 for Scissors
+  <div>
+    <button onclick="play(0)">🪨 Rock</button>
+    <button onclick="play(1)">📄 Paper</button>
+    <button onclick="play(2)">✂️ Scissors</button>
+  </div>
 
-Sample output:
-What do you choose? Type 0 for Rock, 1 for Paper or 2 for Scissors.
-0
+  <pre id="output">Your move and result will appear here...</pre>
 
+  <py-script>
+from js import document
+import random
+
+rock = '''
     _______
 ---'   ____)
       (_____)
       (_____)
       (____)
 ---.__(___)
+'''
 
-Computer choose:
+paper = '''
+    _______
+---'   ____)____
+          ______)
+          _______)
+         _______)
+---.__________)
+'''
 
+scissors = '''
     _______
 ---'   ____)____
           ______)
        __________)
       (____)
 ---.__(___)
+'''
 
-"You Lose!"
-  </pre>
+hand_signs = [rock, paper, scissors]
 
-  <h2>⚙️ Run It Yourself</h2>
-  <p>Click the link below to run the game online or download it to try on your own computer:</p>
+def play(user_choice):
+    user_hand = hand_signs[user_choice]
+    computer_choice = random.randint(0, 2)
+    computer_hand = hand_signs[computer_choice]
 
-  <a href="https://replit.com/" target="_blank" class="button">Run on Replit</a>
-  <br/>
-  <a href="Rock,Paper,Scissors Game.py" download class="button">Download Python File</a>
+    result = ""
+    if user_choice == computer_choice:
+        result = "It's a draw!"
+    elif (user_choice == 0 and computer_choice == 2) or \
+         (user_choice == 1 and computer_choice == 0) or \
+         (user_choice == 2 and computer_choice == 1):
+        result = "You win!"
+    else:
+        result = "You lose!"
 
-  <h2>🧠 Python Concepts Used</h2>
-  <ul>
-    <li>ASCII Art for visuals</li>
-    <li>Conditional statements (if/elif/else)</li>
-    <li>Random choice from a list</li>
-    <li>User input and basic logic</li>
-  </ul>
+    output = f"You chose:\n{user_hand}\nComputer chose:\n{computer_hand}\n\nResult: {result}"
+    document.getElementById("output").innerText = output
+  </py-script>
 
-  <p>Created by: <strong>Your Name</strong> | Hosted on GitHub Pages</p>
 </body>
 </html>
